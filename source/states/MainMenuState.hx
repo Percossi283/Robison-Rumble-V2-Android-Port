@@ -9,7 +9,7 @@ import options.OptionsState;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.7.3'; // This is also used for Discord RPC
+	public static var psychEngineVersion:String = '2.0'; // This is also used for Discord RPC
 	public static var extraKeysVersion:String = '0.4.9'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -70,6 +70,43 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
+var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			var menuItem:FlxSprite = new FlxSprite(540, (i * 140)  + offset);
+			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
+			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
+			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			menuItem.animation.play('idle');
+			menuItem.ID = i;
+			menuItems.add(menuItem);
+			var scr:Float = (optionShit.length - 4) * 0.135;
+			if(optionShit.length < 6) scr = 0;
+			menuItem.scrollFactor.set(0, scr);
+			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
+			menuItem.updateHitbox();
+			/*switch (i)
+			{
+				case 0:
+				 menuItem.setPosition(640,0);		
+
+			}*/
+		}
+
+var bg:FlxSprite = new FlxSprite(0).loadGraphic(Paths.image('menumod/menuBG'));
+		bg.scrollFactor.set(0, 0);
+		bg.setGraphicSize(Std.int(bg.width * 1));
+		bg.updateHitbox();
+		bg.screenCenter();
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
+
+personajes = new FlxSprite(0,0);
+		personajes.loadGraphic(Paths.image('menumod/personajes/' + optionShit[curSelected]));
+		personajes.scrollFactor.set(0, 0);
+		personajes.setGraphicSize(Std.int(personajes.width * 1));
+		personajes.antialiasing = ClientPrefs.globalAntialiasing;
+		add(personajes);
+
 		for (i in 0...optionShit.length)
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
@@ -92,7 +129,7 @@ class MainMenuState extends MusicBeatState
 		ekVer.scrollFactor.set();
 		ekVer.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(ekVer);
-		var psychVer:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var psychVer:FlxText = new FlxText(12, FlxG.height - 44, 0, "Robinson Rumble v" + psychEngineVersion, 12);
 		psychVer.scrollFactor.set();
 		psychVer.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(psychVer);
